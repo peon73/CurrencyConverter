@@ -6,13 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <EditText android:id="@+id/editTextConversionRateDollarsPerEuro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+    <TextView
+        android:id="@+id/textViewConversionRateDollarsPerEuro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USD per EURO"
+        app:layout_constraintStart_toEndOf="@+id/editTextConversionRateDollarsPerEuro"
+        app:layout_constraintTop_toTopOf="@+id/editTextConversionRateDollarsPerEuro" />
+
+    <EditText
+        android:id="@+id/editTextEuro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConversionRateDollarsPerEuro" />
+
+    <TextView
+        android:id="@+id/euroView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EURO"
+        app:layout_constraintStart_toEndOf="@+id/editTextEuro"
+        app:layout_constraintTop_toTopOf="@+id/editTextEuro" />
+
+    <EditText
+        android:id="@+id/editTextDollar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEuro" />
+
+
+    <TextView
+        android:id="@+id/textViewDollar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USD"
+        app:layout_constraintStart_toEndOf="@+id/editTextDollar"
+        app:layout_constraintTop_toTopOf="@+id/editTextDollar" />
+
+    <TextView
+        android:id="@+id/textViewConversionResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDollar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
