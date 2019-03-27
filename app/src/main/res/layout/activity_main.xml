@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<data>
+    <variable name="theCurrencyViewModel" type="com.currencyconverter.CurrencyViewModel"/>
+</data>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +17,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text=""
+        android:text="@={theCurrencyViewModel.liveDataConversionRateDollarsPerEuro}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,7 +39,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text=""
+        android:text="@={theCurrencyViewModel.liveDataEuro}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextConversionRateDollarsPerEuro" />
 
@@ -55,7 +59,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text=""
+        android:text="@={theCurrencyViewModel.liveDataDollars}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEuro" />
 
@@ -74,8 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
-        android:text=""
+        android:text="@{theCurrencyViewModel.liveDataConversionResultDisplayText}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDollar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

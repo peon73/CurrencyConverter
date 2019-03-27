@@ -1,83 +1,63 @@
 package com.currencyconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders; // implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.currencyconverter.databinding.ActivityMainBinding;
+
 public final class MainActivity extends AppCompatActivity {
 
-    private CurrencyModel mCurrencyModel = new CurrencyModel();
+    private final static String LOG_TAG = MainActivity.class.getName();
+
+    private CurrencyViewModel mCurrencyViewModel;
 
     private TextView mTextViewConversionResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mCurrencyViewModel = ViewModelProviders.of(this).get(CurrencyViewModel.class);
+        activityMainBinding.setTheCurrencyViewModel(mCurrencyViewModel);
+        activityMainBinding.setLifecycleOwner(this); // https://developer.android.com/topic/libraries/data-binding/architecture.html#livedata
+        //setContentView(activityMainBinding.getRoot()); // youtube video "Android Jetpack- ViewModel" time 2:58
 
-
-        final EditText editTextConversionRateDollarsPerEuro = (EditText) findViewById(R.id.editTextConversionRateDollarsPerEuro);
-        final EditText editTextDollar = (EditText) findViewById(R.id.editTextDollar);
-        final EditText editTextEuro = (EditText) findViewById(R.id.editTextEuro);
-        mTextViewConversionResult = (TextView) findViewById(R.id.textViewConversionResult);
-
-
-        editTextConversionRateDollarsPerEuro.setText("" + mCurrencyModel.getConversionRateDollarsPerEuro());
-        editTextDollar.setText("" + mCurrencyModel.getDollarValue());
-        editTextEuro.setText("" + mCurrencyModel.getEuroValue());
-        mTextViewConversionResult.setText(mCurrencyModel.getConversionResultDisplayText());
-
-
-        editTextConversionRateDollarsPerEuro.addTextChangedListener(new TextWatcher() {
+        mCurrencyViewModel.getLiveDataConversionRateDollarsPerEuro().observe(this, new Observer<String>(){
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final boolean isNewValue = mCurrencyModel.setConversionRateDollarsPerEuroFromString(editTextConversionRateDollarsPerEuro.getText().toString());
-                if(isNewValue) {
-                    editTextDollar.setText("" + mCurrencyModel.getDollarValue());
-                    updateConversionResultDisplayText();
-                }
+            public void onChanged(String value) {
+            log("getLiveDataConversionRateDollarsPerEuro().observe value : " + value);
+            mCurrencyViewModel.setConversionRateDollarsPerEuro(value);
             }
         });
 
-        editTextDollar.addTextChangedListener(new TextWatcher() {
+        mCurrencyViewModel.getLiveDataEuro().observe(this, new Observer<String>(){
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final boolean isNewValue = mCurrencyModel.setDollarValueFromString(editTextDollar.getText().toString());
-                if(isNewValue) {
-                    editTextEuro.setText("" + mCurrencyModel.getEuroValue());
-                    updateConversionResultDisplayText();
-                }
+            public void onChanged(String value) {
+            log("getLiveDataEuro().observe value : " + value);
+            mCurrencyViewModel.setEuro(value);
             }
         });
 
-        editTextEuro.addTextChangedListener(new TextWatcher() {
+        mCurrencyViewModel.getLiveDataDollars().observe(this, new Observer<String>(){
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final boolean isNewValue = mCurrencyModel.setEuroValueFromString(editTextEuro.getText().toString());
-                if(isNewValue) {
-                    editTextDollar.setText("" + mCurrencyModel.getDollarValue());
-                    updateConversionResultDisplayText();
-                }
+            public void onChanged(String value) {
+            log("getLiveDataDollars().observe value : " + value);
+            mCurrencyViewModel.setDollars(value);
             }
         });
     }
 
-    private void updateConversionResultDisplayText() {
-        mTextViewConversionResult.setText(mCurrencyModel.getConversionResultDisplayText());
+    private void log(String message) {
+        Log.d(LOG_TAG, message);
     }
 }
