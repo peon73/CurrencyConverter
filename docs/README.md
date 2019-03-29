@@ -73,8 +73,8 @@ Is not not possible somehow to avoid code in the activity and use setters (or ob
 ```java
 public final class CurrencyViewModel extends ViewModel {
 	
-	// GUI independent model class i.e. would be easy to reuse from a non-Android application
-	private final CurrencyModel mCurrencyModel = new CurrencyModel();
+    // GUI independent model class i.e. would be easy to reuse from a non-Android application
+    private final CurrencyModel mCurrencyModel = new CurrencyModel();
 
     private final MutableLiveData<String> mLiveDataConversionRateDollarsPerEuro = new MutableLiveData<String>();
     private final MutableLiveData<String> mLiveDataEuro = new MutableLiveData<String>();
@@ -98,13 +98,13 @@ public final class CurrencyViewModel extends ViewModel {
         return this.mLiveDataEuro;
     }
 	
-	// one way binding from the above layout file 
+    // one way binding from the above layout file 
     public LiveData<String> getConversionResultDisplayText() {
         return mLiveDataConversionResultDisplayText;
     }	
 
-	// It seems necessary to invoke this method from the Activity to be 
-	// able to get a reference to a LifecycleOwner ?
+    // It seems necessary to invoke this method from the Activity to be 
+    // able to get a reference to a LifecycleOwner ?
     public void observeConversionRateDollarsPerEuro(LifecycleOwner lifecycleOwner) {
         final CurrencyViewModel currencyViewModel = this;
         this.mLiveDataConversionRateDollarsPerEuro.observe(lifecycleOwner,  new Observer<String>(){
@@ -114,9 +114,9 @@ public final class CurrencyViewModel extends ViewModel {
             }
         });
     }
-	// ...
-	// two other observe methods similar to the above, for the other two input fields.
-	// ...
+    // ...
+    // two other observe methods similar to the above, for the other two input fields.
+    // ...
 	
     private void setConversionRateDollarsPerEuro(String value) {
         if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value)) {
@@ -126,9 +126,9 @@ public final class CurrencyViewModel extends ViewModel {
             updateConversionResultDisplayText();
         }
     }
-	// ...
-	// two other setter methods similar to the above, for the other two input fields
-	// ...
+    // ...
+    // two other setter methods similar to the above, for the other two input fields
+    // ...
 	
 	
 ```
