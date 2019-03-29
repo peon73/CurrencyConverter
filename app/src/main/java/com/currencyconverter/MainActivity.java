@@ -3,30 +3,20 @@ package com.currencyconverter;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders; // implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import com.currencyconverter.databinding.ActivityMainBinding;
+import com.currencyconverter.databinding.ActivityMainBinding; // generated class
 
 public final class MainActivity extends AppCompatActivity {
-
     private final static String LOG_TAG = MainActivity.class.getName();
 
     private CurrencyViewModel mCurrencyViewModel;
 
-    private TextView mTextViewConversionResult;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
 
         final LifecycleOwner lifecycleOwner = this;
 
@@ -38,9 +28,5 @@ public final class MainActivity extends AppCompatActivity {
         mCurrencyViewModel.observeConversionRateDollarsPerEuro(lifecycleOwner);
         mCurrencyViewModel.observeEuro(lifecycleOwner);
         mCurrencyViewModel.observeDollars(lifecycleOwner);
-    }
-
-    private void log(String message) {
-        Log.d(LOG_TAG, message);
     }
 }
