@@ -63,7 +63,7 @@ When the user edits field 3, then field 2 becomes updated.
 **Questions** I would like to find answers for:
 
 **What is the best way of avoiding that a text field modification triggers updates in an eternal loop?**  
-I have implemented it with if statements (e.g. using code such as "*if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value))*") but it feels as to much code and maybe there is some better way of preventing eternal code?  
+I have implemented it with "if statements" (e.g. using code such as "*if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value))*") but it feels as too much code and maybe there is some better way of preventing eternal code?  
 
 **Is it somehow (how?) possible to avoid exposing "MutableLiveData<String>" for a two way databinding ?**  
 Exposing (in a public method return value) a  reference to MutableLiveData seem to be similarly ugly (regarding encapsulation) as exposing a modifiable list instead of exposing an unmodifiableCollection.  
@@ -73,14 +73,14 @@ It would seem to be more clean to expose a LiveData instead of MutableLiveData b
 I have tried using a setter method with either "String" or "LiveData<String>" but have not succeeded.  
 
 If I would have succeeded with a setter method to become invoked, then from there I would have updated 
-a new value in one of the othe fields, but since I could not do that, instead I used an observer 
+a new value in one of the other fields, but since I could not do that, instead I used an observer 
 for the MutableLiveData fields.
 
 I think the observer may be used with a LiveData (i.e. not necessary with MutableLiveData) but to be able to trigger edit events with the two-way databinding, then a MutableLiveData seem to be necessary to expose instead of LiveData.
 
 Also, it seems as the observer must be triggered from the Activity since it needs a LifecycleOwner as parameter.  
 Is this necessary?  
-Or **is it possible somehow (how?) to avoid observer triggering code in the activity and use setters (or observers) in the view model?**
+Or **is it possible somehow (how?) to remove the observer invkoing code from the activity and instead only use setters (or observers) in the view model?**
 
 The full code to the three java classes can be found through the links in the above section.  
 Below is just some parts of the the view model class, to help illustrating the above questions and the above layout file in a section above.
