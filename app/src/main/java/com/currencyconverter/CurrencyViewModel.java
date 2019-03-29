@@ -2,15 +2,21 @@ package com.currencyconverter;
 
 import android.util.Log;
 
-import androidx.databinding.InverseMethod;
+import androidx.databinding.Observable;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-public final class CurrencyViewModel extends ViewModel {
+public final class CurrencyViewModel extends ViewModel implements Observable {
     private final static String LOG_TAG = CurrencyViewModel.class.getName();
 
     private final CurrencyModel mCurrencyModel = new CurrencyModel();
+//    public CurrencyModel getCurrencyModel() {
+//        return mCurrencyModel;
+//    }
+
 
     private final MutableLiveData<String> mLiveDataConversionRateDollarsPerEuro = new MutableLiveData<String>();
     private final MutableLiveData<String> mLiveDataEuro = new MutableLiveData<String>();
@@ -25,63 +31,90 @@ public final class CurrencyViewModel extends ViewModel {
         this.mLiveDataConversionResultDisplayText.setValue("" + mCurrencyModel.getConversionResultDisplayText());
     }
 
-    public MutableLiveData<String> getLiveDataConversionRateDollarsPerEuro() {
+    public void observeConversionRateDollarsPerEuro(LifecycleOwner lifecycleOwner, Observer<String> observer) {
+        this.mLiveDataConversionRateDollarsPerEuro.observe(lifecycleOwner, observer);
+    }
+    public void observeEuro(LifecycleOwner lifecycleOwner, Observer<String> observer) {
+        this.mLiveDataEuro.observe(lifecycleOwner, observer);
+    }
+    public void observeDollars(LifecycleOwner lifecycleOwner, Observer<String> observer) {
+        this.mLiveDataDollars.observe(lifecycleOwner, observer);
+    }
+
+
+
+    //@Bindable
+    public MutableLiveData<String> getConversionRateDollarsPerEuro() {
+        log("getConversionRateDollarsPerEuro " + mLiveDataConversionRateDollarsPerEuro.getValue());
         return mLiveDataConversionRateDollarsPerEuro;
-    }
-//    public void setLiveDataConversionRateDollarsPerEuro(LiveData<String> value) {
-//        log("CurrencyViewModel setLiveDataConversionRateDollarsPerEuro " + value.getValue());
-//        mLiveDataConversionRateDollarsPerEuro.setValue(value.getValue());
-//    }
-
-//    @InverseMethod("setLiveDataEuro")
-    //public LiveData<String> getLiveDataEuro() {
-    public MutableLiveData<String> getLiveDataEuro() {
-        return mLiveDataEuro;
-    }
-
-//    public void setLiveDataEuro(String value) {
-//        log("CurrencyViewModel setLiveDataEuro " + value);
-//        mLiveDataEuro.setValue(value);
-//    }
-
-    public MutableLiveData<String> getLiveDataDollars() {
-        return mLiveDataDollars;
-    }
-//    public void setLiveDataDollars(MutableLiveData<String> value) {
-//        log("CurrencyViewModel setLiveDataDollars " + value);
-//        mLiveDataDollars.setValue(value.getValue());
-//    }
-
-    public LiveData<String> getLiveDataConversionResultDisplayText() {
-        return mLiveDataConversionResultDisplayText;
     }
 
     public void setConversionRateDollarsPerEuro(String value) {
-        final boolean isNewValue = mCurrencyModel.setConversionRateDollarsPerEuroFromString(value);
-        if(isNewValue) {
+        log("setConversionRateDollarsPerEuro " + value);
+        if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value)) {
+            mCurrencyModel.setConversionRateDollarsPerEuroFromString(value);
+
+            this.mLiveDataConversionRateDollarsPerEuro.setValue(value);
             this.mLiveDataDollars.setValue("" + mCurrencyModel.getDollarValue());
             updateConversionResultDisplayText();
         }
     }
 
-    public void setEuro(String value) {
-        final boolean isNewValue = mCurrencyModel.setEuroValueFromString(value);
-        if(isNewValue) {
-            this.mLiveDataDollars.setValue("" + mCurrencyModel.getDollarValue());
-            updateConversionResultDisplayText();
-        }
+    //@Bindable
+//    public LiveData<String> getDollars() {
+    public MutableLiveData<String> getDollars() {
+        log("getDollars " + mLiveDataDollars.getValue());
+        return mLiveDataDollars;
     }
 
+    //public void setDollars(LiveData<String> value) {
     public void setDollars(String value) {
-        final boolean isNewValue = mCurrencyModel.setDollarValueFromString(value);
-        if(isNewValue) {
+        log("setDollars " + value);
+        if(mCurrencyModel.isDollarValueChanged(value)) {
+            mCurrencyModel.setDollarValueFromString(value);
+
+            this.mLiveDataDollars.setValue(value);
             this.mLiveDataEuro.setValue("" + mCurrencyModel.getEuroValue());
             updateConversionResultDisplayText();
         }
     }
 
+    //@Bindable
+    public MutableLiveData<String> getEuro() {
+        log("getEuro " + mLiveDataEuro.getValue());
+        return this.mLiveDataEuro;
+    }
+
+    public void setEuro(String value) {
+        log("setEuro " + value);
+        if(mCurrencyModel.isEuroValueChanged(value)) {
+            mCurrencyModel.setEuroString(value);
+
+            this.mLiveDataEuro.setValue(value);
+            this.mLiveDataDollars.setValue("" + mCurrencyModel.getDollarValue());
+            updateConversionResultDisplayText();
+        }
+    }
+
+
+    //@Bindable
+    public LiveData<String> getConversionResultDisplayText() {
+        return mLiveDataConversionResultDisplayText;
+    }
+
+
     private void updateConversionResultDisplayText() {
         this.mLiveDataConversionResultDisplayText.setValue(mCurrencyModel.getConversionResultDisplayText());
+    }
+
+    @Override
+    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        log("addOnPropertyChangedCallback");
+    }
+
+    @Override
+    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        log("removeOnPropertyChangedCallback");
     }
 
     private void log(String message) {

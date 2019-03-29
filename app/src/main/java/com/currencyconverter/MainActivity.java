@@ -2,6 +2,7 @@ package com.currencyconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders; // implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
@@ -26,33 +27,38 @@ public final class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
+
+        final LifecycleOwner lifecycleOwner = this;
+
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mCurrencyViewModel = ViewModelProviders.of(this).get(CurrencyViewModel.class);
         activityMainBinding.setTheCurrencyViewModel(mCurrencyViewModel);
-        activityMainBinding.setLifecycleOwner(this); // https://developer.android.com/topic/libraries/data-binding/architecture.html#livedata
+        activityMainBinding.setLifecycleOwner(lifecycleOwner); // https://developer.android.com/topic/libraries/data-binding/architecture.html#livedata
+
         //setContentView(activityMainBinding.getRoot()); // youtube video "Android Jetpack- ViewModel" time 2:58
 
-        mCurrencyViewModel.getLiveDataConversionRateDollarsPerEuro().observe(this, new Observer<String>(){
+        // mCurrencyViewModel.getConversionRateDollarsPerEuro().observe(this, new Observer<String>(){
+        mCurrencyViewModel.observeConversionRateDollarsPerEuro(lifecycleOwner, new Observer<String>(){
             @Override
             public void onChanged(String value) {
-            log("getLiveDataConversionRateDollarsPerEuro().observe value : " + value);
-            mCurrencyViewModel.setConversionRateDollarsPerEuro(value);
+                log("observeConversionRateDollarsPerEuro onChanged value : " + value);
+                mCurrencyViewModel.setConversionRateDollarsPerEuro(value);
             }
         });
 
-        mCurrencyViewModel.getLiveDataEuro().observe(this, new Observer<String>(){
+        mCurrencyViewModel.observeEuro(lifecycleOwner, new Observer<String>(){
             @Override
             public void onChanged(String value) {
-            log("getLiveDataEuro().observe value : " + value);
-            mCurrencyViewModel.setEuro(value);
+                log("observeEuro onChanged value : " + value);
+                mCurrencyViewModel.setEuro(value);
             }
         });
 
-        mCurrencyViewModel.getLiveDataDollars().observe(this, new Observer<String>(){
+        mCurrencyViewModel.observeDollars(lifecycleOwner, new Observer<String>(){
             @Override
             public void onChanged(String value) {
-            log("getLiveDataDollars().observe value : " + value);
-            mCurrencyViewModel.setDollars(value);
+                log("observeDollars onChanged value : " + value);
+                mCurrencyViewModel.setDollars(value);
             }
         });
     }

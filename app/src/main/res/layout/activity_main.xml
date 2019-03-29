@@ -17,7 +17,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="@={theCurrencyViewModel.liveDataConversionRateDollarsPerEuro}"
+        android:text="@={theCurrencyViewModel.conversionRateDollarsPerEuro}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +39,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="@={theCurrencyViewModel.liveDataEuro}"
+        android:text="@={theCurrencyViewModel.euro}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextConversionRateDollarsPerEuro" />
 
@@ -59,7 +59,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="@={theCurrencyViewModel.liveDataDollars}"
+        android:text="@={theCurrencyViewModel.dollars}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEuro" />
 
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
-        android:text="@{theCurrencyViewModel.liveDataConversionResultDisplayText}"
+        android:text="@{theCurrencyViewModel.conversionResultDisplayText}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDollar" />
 
