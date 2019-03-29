@@ -2,14 +2,14 @@ package com.currencyconverter;
 
 import android.util.Log;
 
-import androidx.databinding.Observable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-public final class CurrencyViewModel extends ViewModel implements Observable {
+public final class CurrencyViewModel extends ViewModel
+{
     private final static String LOG_TAG = CurrencyViewModel.class.getName();
 
     private final CurrencyModel mCurrencyModel = new CurrencyModel();
@@ -37,6 +37,7 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
             }
         });
     }
+
     public void observeEuro(LifecycleOwner lifecycleOwner){
         final CurrencyViewModel currencyViewModel = this;
         this.mLiveDataEuro.observe(lifecycleOwner,  new Observer<String>(){
@@ -78,13 +79,11 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
     }
 
     //@Bindable
-//    public LiveData<String> getDollars() {
     public MutableLiveData<String> getDollars() {
         log("getDollars " + mLiveDataDollars.getValue());
         return mLiveDataDollars;
     }
 
-    //public void setDollars(LiveData<String> value) {
     private void setDollars(String value) {
         log("setDollars " + value);
         if(mCurrencyModel.isDollarValueChanged(value)) {
@@ -113,28 +112,17 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
         }
     }
 
-
     //@Bindable
     public LiveData<String> getConversionResultDisplayText() {
         return mLiveDataConversionResultDisplayText;
     }
 
-
     private void updateConversionResultDisplayText() {
         this.mLiveDataConversionResultDisplayText.setValue(mCurrencyModel.getConversionResultDisplayText());
-    }
-
-    @Override
-    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        log("addOnPropertyChangedCallback");
-    }
-
-    @Override
-    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        log("removeOnPropertyChangedCallback");
     }
 
     private void log(String message) {
         Log.d(LOG_TAG, message);
     }
+
 }

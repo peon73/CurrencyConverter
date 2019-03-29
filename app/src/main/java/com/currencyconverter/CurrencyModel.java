@@ -37,82 +37,60 @@ public final class CurrencyModel {
     }
 
 
-    public boolean setConversionRateDollarsPerEuro(final double conversionRateDollarsPerEuro) {
-        final boolean isNewValue = !areValuesEqual(this.conversionRateDollarsPerEuro, conversionRateDollarsPerEuro);
-        if(isNewValue) {
-            this.conversionRateDollarsPerEuro = conversionRateDollarsPerEuro;
-            updateDollarValue();
-        }
-        return isNewValue;
+    /**
+     * precondition for this setter method:
+     * isConversionRateDollarsPerEuroChanged should return true
+     */
+    public void setConversionRateDollarsPerEuro(final double conversionRateDollarsPerEuro) {
+        this.conversionRateDollarsPerEuro = conversionRateDollarsPerEuro;
+        updateDollarValue();
     }
 
-    //public boolean setEuroValue(final double euroValue) {
-    // precondition: isEuroValueChanged should be true
+    /**
+     * precondition for this setter method:
+     * isEuroValueChanged should return true
+     */
     public void setEuroValue(final double euroValue) {
-//        final boolean isNewValue = !areValuesEqual(this.euroValue, euroValue);
-//        if(isNewValue) {
-            this.euroValue = euroValue;
-            updateDollarValue();
-//        }
-//        return isNewValue;
+        this.euroValue = euroValue;
+        updateDollarValue();
     }
 
-    public boolean isConversionRateDollarsPerEuroChanged(String conversionRateDollarsPerEuroString) {
-        if(isNullOrEmpty(conversionRateDollarsPerEuroString)) return false;
-        double conversionRateDollarsPerEuro = Double.parseDouble(conversionRateDollarsPerEuroString);
-        return !areValuesEqual(this.conversionRateDollarsPerEuro, conversionRateDollarsPerEuro);
-    }
-    public boolean isEuroValueChanged(String euroValueString) {
-        if(isNullOrEmpty(euroValueString)) return false;
-        double euroValue = Double.parseDouble(euroValueString);
-        return !areValuesEqual(this.euroValue, euroValue);
-    }
-    public boolean isDollarValueChanged(String dollarValueString) {
-        if(isNullOrEmpty(dollarValueString)) return false;
-        double dollarValue = Double.parseDouble(dollarValueString);
-        return !areValuesEqual(this.dollarValue, dollarValue);
-    }
-
-    // precondition: isDollarValueChanged should be true
-//    public boolean setDollarValue(final double dollarValue) {
+    /**
+     * precondition for this setter method:
+     * isDollarValueChanged should return true
+     */
     public void setDollarValue(final double dollarValue) {
-//        final boolean isNewValue = !areValuesEqual(this.dollarValue, dollarValue);
-//        if(isNewValue) {
-            this.dollarValue = dollarValue;
-            updateEuroValue();
-//        }
-//        return isNewValue;
+        this.dollarValue = dollarValue;
+        updateEuroValue();
     }
 
-
-
-    public boolean setConversionRateDollarsPerEuroFromString(final String value) {
-        if(isNullOrEmpty(value)) return true;
-        return this.setConversionRateDollarsPerEuro(Double.parseDouble(value));
+    /**
+     * precondition for this setter method:
+     * isConversionRateDollarsPerEuroChanged should return true
+     */
+    public void setConversionRateDollarsPerEuroFromString(final String value) {
+        if(isNullOrEmpty(value)) return;
+        this.setConversionRateDollarsPerEuro(Double.parseDouble(value));
     }
 
-    public void setEuroString2(String value) {
+    /**
+     * precondition for this setter method:
+     * isEuroValueChanged should return true
+     */
+    public void setEuroString(final String value) {
+        Log.d(LOG_TAG, "setEuroString is invoked with value " + value);
         if(isNullOrEmpty(value)) return;
         this.setEuroValue(Double.parseDouble(value));
     }
 
-    // precondition: isEuroValueChanged should be true
-    public void setEuroString(String value) {
-        Log.d(LOG_TAG, "setEuroString is invoked with value " + value);
-//        if(isNullOrEmpty(value)) return true;
-        this.setEuroValue(Double.parseDouble(value));
-    }
-
-    public String getEuroString() {
-        return "" + this.euroValue;
-    }
-
-    // precondition: isDollarValueChanged should be true
+    /**
+     * precondition for this setter method:
+     * isDollarValueChanged should return true
+     */
     public void setDollarValueFromString(String value) {
-//        if(isNullOrEmpty(value)) return true;
+        if(isNullOrEmpty(value)) return;
         this.setDollarValue(Double.parseDouble(value));
     }
-
 
 
     private boolean isNullOrEmpty(String value) {
@@ -129,5 +107,21 @@ public final class CurrencyModel {
 
     private double getRoundedValue(final double value) {
         return Math.round(value * 100000d) / 100000d;
+    }
+
+    public boolean isConversionRateDollarsPerEuroChanged(String conversionRateDollarsPerEuroString) {
+        if(isNullOrEmpty(conversionRateDollarsPerEuroString)) return false;
+        double conversionRateDollarsPerEuro = Double.parseDouble(conversionRateDollarsPerEuroString);
+        return !areValuesEqual(this.conversionRateDollarsPerEuro, conversionRateDollarsPerEuro);
+    }
+    public boolean isEuroValueChanged(String euroValueString) {
+        if(isNullOrEmpty(euroValueString)) return false;
+        double euroValue = Double.parseDouble(euroValueString);
+        return !areValuesEqual(this.euroValue, euroValue);
+    }
+    public boolean isDollarValueChanged(String dollarValueString) {
+        if(isNullOrEmpty(dollarValueString)) return false;
+        double dollarValue = Double.parseDouble(dollarValueString);
+        return !areValuesEqual(this.dollarValue, dollarValue);
     }
 }
