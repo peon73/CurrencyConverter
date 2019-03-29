@@ -80,7 +80,7 @@ I think the observer may be used with a LiveData (i.e. not necessary with Mutabl
 
 Also, it seems as the observer must be triggered from the Activity since it needs a LifecycleOwner as parameter.  
 Is this necessary?  
-Or **is it possible somehow (how?) to remove the observer invkoing code from the activity and instead only use setters (or observers) in the view model?**
+Or **is it possible somehow (how?) to remove the observer invoking code from the activity and instead only use setters (or observers) in the view model?**
 
 The full code to the three java classes can be found through the links in the above section.  
 Below is just some parts of the the view model class, to help illustrating the above questions and the above layout file in a section above.
