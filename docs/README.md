@@ -95,17 +95,14 @@ public final class CurrencyViewModel extends ViewModel {
     // two way databinding in the above layout file 
     // i.e. android:text="@={theCurrencyViewModel.conversionRateDollarsPerEuro}"
     public MutableLiveData<String> getConversionRateDollarsPerEuro() {
-        log("getConversionRateDollarsPerEuro " + mLiveDataConversionRateDollarsPerEuro.getValue());
         return mLiveDataConversionRateDollarsPerEuro;
     }
 	
     public MutableLiveData<String> getDollars() {
-        log("getDollars " + mLiveDataDollars.getValue());
         return mLiveDataDollars;
     }
 	
     public MutableLiveData<String> getEuro() {
-        log("getEuro " + mLiveDataEuro.getValue());
         return this.mLiveDataEuro;
     }
 	
