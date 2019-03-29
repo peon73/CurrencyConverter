@@ -13,10 +13,6 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
     private final static String LOG_TAG = CurrencyViewModel.class.getName();
 
     private final CurrencyModel mCurrencyModel = new CurrencyModel();
-//    public CurrencyModel getCurrencyModel() {
-//        return mCurrencyModel;
-//    }
-
 
     private final MutableLiveData<String> mLiveDataConversionRateDollarsPerEuro = new MutableLiveData<String>();
     private final MutableLiveData<String> mLiveDataEuro = new MutableLiveData<String>();
@@ -31,16 +27,37 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
         this.mLiveDataConversionResultDisplayText.setValue("" + mCurrencyModel.getConversionResultDisplayText());
     }
 
-    public void observeConversionRateDollarsPerEuro(LifecycleOwner lifecycleOwner, Observer<String> observer) {
-        this.mLiveDataConversionRateDollarsPerEuro.observe(lifecycleOwner, observer);
+    public void observeConversionRateDollarsPerEuro(LifecycleOwner lifecycleOwner) {
+        final CurrencyViewModel currencyViewModel = this;
+        this.mLiveDataConversionRateDollarsPerEuro.observe(lifecycleOwner,  new Observer<String>(){
+            @Override
+            public void onChanged(String value) {
+            log("observeConversionRateDollarsPerEuro onChanged value : " + value);
+            currencyViewModel.setConversionRateDollarsPerEuro(value);
+            }
+        });
     }
-    public void observeEuro(LifecycleOwner lifecycleOwner, Observer<String> observer) {
-        this.mLiveDataEuro.observe(lifecycleOwner, observer);
-    }
-    public void observeDollars(LifecycleOwner lifecycleOwner, Observer<String> observer) {
-        this.mLiveDataDollars.observe(lifecycleOwner, observer);
+    public void observeEuro(LifecycleOwner lifecycleOwner){
+        final CurrencyViewModel currencyViewModel = this;
+        this.mLiveDataEuro.observe(lifecycleOwner,  new Observer<String>(){
+            @Override
+            public void onChanged(String value) {
+            log("observeEuro onChanged value : " + value);
+            currencyViewModel.setEuro(value);
+            }
+        });
     }
 
+    public void observeDollars(LifecycleOwner lifecycleOwner) {
+        final CurrencyViewModel currencyViewModel = this;
+        this.mLiveDataDollars.observe(lifecycleOwner, new Observer<String>(){
+            @Override
+            public void onChanged(String value) {
+                log("observeDollars onChanged value : " + value);
+                currencyViewModel.setDollars(value);
+            }
+        });
+    }
 
 
     //@Bindable
@@ -49,7 +66,7 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
         return mLiveDataConversionRateDollarsPerEuro;
     }
 
-    public void setConversionRateDollarsPerEuro(String value) {
+    private void setConversionRateDollarsPerEuro(String value) {
         log("setConversionRateDollarsPerEuro " + value);
         if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value)) {
             mCurrencyModel.setConversionRateDollarsPerEuroFromString(value);
@@ -68,7 +85,7 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
     }
 
     //public void setDollars(LiveData<String> value) {
-    public void setDollars(String value) {
+    private void setDollars(String value) {
         log("setDollars " + value);
         if(mCurrencyModel.isDollarValueChanged(value)) {
             mCurrencyModel.setDollarValueFromString(value);
@@ -85,7 +102,7 @@ public final class CurrencyViewModel extends ViewModel implements Observable {
         return this.mLiveDataEuro;
     }
 
-    public void setEuro(String value) {
+    private void setEuro(String value) {
         log("setEuro " + value);
         if(mCurrencyModel.isEuroValueChanged(value)) {
             mCurrencyModel.setEuroString(value);

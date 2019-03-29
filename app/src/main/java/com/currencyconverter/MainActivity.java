@@ -35,32 +35,9 @@ public final class MainActivity extends AppCompatActivity {
         activityMainBinding.setTheCurrencyViewModel(mCurrencyViewModel);
         activityMainBinding.setLifecycleOwner(lifecycleOwner); // https://developer.android.com/topic/libraries/data-binding/architecture.html#livedata
 
-        //setContentView(activityMainBinding.getRoot()); // youtube video "Android Jetpack- ViewModel" time 2:58
-
-        // mCurrencyViewModel.getConversionRateDollarsPerEuro().observe(this, new Observer<String>(){
-        mCurrencyViewModel.observeConversionRateDollarsPerEuro(lifecycleOwner, new Observer<String>(){
-            @Override
-            public void onChanged(String value) {
-                log("observeConversionRateDollarsPerEuro onChanged value : " + value);
-                mCurrencyViewModel.setConversionRateDollarsPerEuro(value);
-            }
-        });
-
-        mCurrencyViewModel.observeEuro(lifecycleOwner, new Observer<String>(){
-            @Override
-            public void onChanged(String value) {
-                log("observeEuro onChanged value : " + value);
-                mCurrencyViewModel.setEuro(value);
-            }
-        });
-
-        mCurrencyViewModel.observeDollars(lifecycleOwner, new Observer<String>(){
-            @Override
-            public void onChanged(String value) {
-                log("observeDollars onChanged value : " + value);
-                mCurrencyViewModel.setDollars(value);
-            }
-        });
+        mCurrencyViewModel.observeConversionRateDollarsPerEuro(lifecycleOwner);
+        mCurrencyViewModel.observeEuro(lifecycleOwner);
+        mCurrencyViewModel.observeDollars(lifecycleOwner);
     }
 
     private void log(String message) {
