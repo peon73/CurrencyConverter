@@ -60,9 +60,12 @@ When the user edits field 3, then field 2 becomes updated.
 
 # Java View Model class
 
-Questions I would like to find answers for:
+**Questions** I would like to find answers for:
 
-Is it somehow possible to avoid exposing "MutableLiveData<String>" for a two way databinding ?  
+**What is the best way of avoiding that a text field modification triggers updates in an eternal loop?**  
+I have implemented it with if statements (e.g. using code such as "*if(mCurrencyModel.isConversionRateDollarsPerEuroChanged(value))*") but it feels as to much code and maybe there is some better way of preventing eternal code?  
+
+**Is it somehow (how?) possible to avoid exposing "MutableLiveData<String>" for a two way databinding ?**  
 Exposing (in a public method return value) a  reference to MutableLiveData seem to be similarly ugly (regarding encapsulation) as exposing a modifiable list instead of exposing an unmodifiableCollection.  
 
 It would seem to be more clean to expose a LiveData instead of MutableLiveData but then the two way code does not seem to work.  
@@ -77,7 +80,7 @@ I think the observer may be used with a LiveData (i.e. not necessary with Mutabl
 
 Also, it seems as the observer must be triggered from the Activity since it needs a LifecycleOwner as parameter.  
 Is this necessary?  
-Or is it possible somehow to avoid observer triggering code in the activity and use setters (or observers) in the view model?
+Or **is it possible somehow (how?) to avoid observer triggering code in the activity and use setters (or observers) in the view model?**
 
 The full code to the three java classes can be found through the links in the above section.  
 Below is just some parts of the the view model class, to help illustrating the above questions and the above layout file in a section above.
