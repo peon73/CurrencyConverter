@@ -28,25 +28,25 @@ When the user edits field 3, then field 2 becomes updated.
     <variable name="theCurrencyViewModel" type="com.currencyconverter.CurrencyViewModel"/>
 </data>
 ...
-    <EditText android:id="@+id/editTextConversionRateDollarsPerEuro"
-		...
-        android:text="@={theCurrencyViewModel.conversionRateDollarsPerEuro}"
-	/>
+<EditText android:id="@+id/editTextConversionRateDollarsPerEuro"
+    ...
+    android:text="@={theCurrencyViewModel.conversionRateDollarsPerEuro}"
+/>
 ...
-    <EditText android:id="@+id/editTextEuro"
-		...
-        android:text="@={theCurrencyViewModel.euro}"
-	/>
+<EditText android:id="@+id/editTextEuro"
+    ...
+    android:text="@={theCurrencyViewModel.euro}"
+/>
 ...
-    <EditText android:id="@+id/editTextDollar"
-		...
-        android:text="@={theCurrencyViewModel.dollars}"
-	/>
+<EditText android:id="@+id/editTextDollar"
+    ...
+    android:text="@={theCurrencyViewModel.dollars}"
+/>
 ...
-    <TextView android:id="@+id/textViewConversionResult"
-		...
-        android:text="@{theCurrencyViewModel.conversionResultDisplayText}"
-	/>
+<TextView android:id="@+id/textViewConversionResult"
+    ...
+    android:text="@{theCurrencyViewModel.conversionResultDisplayText}"
+/>
 ```
 
 # Java View Model class
