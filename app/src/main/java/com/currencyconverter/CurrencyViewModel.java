@@ -60,6 +60,13 @@ public final class CurrencyViewModel extends ViewModel
         });
     }
 
+    //     Is it possible to avoid exposing "MutableLiveData<String>" for a two way databinding ?
+    //     Doing that seem to be similarly ugly (regarding encapsulation) as exposing a modifiable list instead
+    //     of exposiing an unmodifiableCollection.
+    //     It would seem to be more clean to expose a LiveData instead of MutableLiveData
+    //     but then the two way code does not seem to work.
+    //     I have tried using a setter method with either "String" or "LiveData<String>"
+    //     but have not succeeded.
 
     //@Bindable
     public MutableLiveData<String> getConversionRateDollarsPerEuro() {
