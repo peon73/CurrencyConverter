@@ -49,27 +49,35 @@ When the user edits field 3, then field 2 becomes updated.
 />
 ```
 
+# The three classes in the app
+
+[app/src/main/java/com/currencyconverter/CurrencyModel.java](https://github.com/peon73/CurrencyConverter/blob/master/app/src/main/java/com/currencyconverter/CurrencyModel.java)  
+[app/src/main/java/com/currencyconverter/CurrencyViewModel.java](https://github.com/peon73/CurrencyConverter/blob/master/app/src/main/java/com/currencyconverter/CurrencyViewModel.java)  
+[app/src/main/java/com/currencyconverter/MainActivity.java](https://github.com/peon73/CurrencyConverter/blob/master/app/src/main/java/com/currencyconverter/MainActivity.java)  
+
 # Java View Model class
 
+Questions I would like to find answers for:
+
 Is it somehow possible to avoid exposing "MutableLiveData<String>" for a two way databinding ?  
-Exposing (in a public method return value) a  reference to MutableLiveData seem to be similarly ugly (regarding encapsulation) as exposing a modifiable list instead of exposiing an unmodifiableCollection.  
+Exposing (in a public method return value) a  reference to MutableLiveData seem to be similarly ugly (regarding encapsulation) as exposing a modifiable list instead of exposing an unmodifiableCollection.  
 
 It would seem to be more clean to expose a LiveData instead of MutableLiveData but then the two way code does not seem to work.  
 
 I have tried using a setter method with either "String" or "LiveData<String>" but have not succeeded.  
 
 If I would have succeeded with a setter method to become invoked, then from there I would have updated 
-a new value in one of the othe fields, but since I did could not do that, instead I used an observer 
+a new value in one of the othe fields, but since I could not do that, instead I used an observer 
 for the MutableLiveData fields.
 
-I think the observer could be used with a LiveData but to be able to trigger edit events with the two-way 
-databinding, then a MutableLiveData seem to be necessary to expose instead of LiveData.
+I think the observer may be used with a LiveData (i.e. not necessary with MutableLiveData) but to be able to trigger edit events with the two-way databinding, then a MutableLiveData seem to be necessary to expose instead of LiveData.
 
-Also, it seems as the observer must be triggered from the Activity since it needs a LifecycleOwner as parameter.
-Is this necessary?
-Is not not possible somehow to avoid code in the activity and use setters (or observers) in the view model?
+Also, it seems as the observer must be triggered from the Activity since it needs a LifecycleOwner as parameter.  
+Is this necessary?  
+Or is it possible somehow to avoid observer triggering code in the activity and use setters (or observers) in the view model?
 
-[app/src/main/java/com/currencyconverter/CurrencyViewModel.java](https://github.com/peon73/CurrencyConverter/blob/master/app/src/main/java/com/currencyconverter/CurrencyViewModel.java)
+The full code to the three java classes can be found through the links in the above section.  
+Below is just some parts of the the view model class, to help illustrating the above questions and the above layout file in a section above.
 ```java
 public final class CurrencyViewModel extends ViewModel {
 	
