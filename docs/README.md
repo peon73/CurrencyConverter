@@ -2,6 +2,9 @@
 
 This Android App is a currency converter.
 
+It works as expected but probably not implemented in the best way.  
+If you know how to implement it better then please do contribute in [issue 1](https://github.com/peon73/CurrencyConverter/issues/1)
+
 The purpose of the App is to experiment with Android MVVM/ViewModel/LiveData/databinding.
 
 ![screenshot.jpg](images/screenshot.jpg)
