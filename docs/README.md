@@ -2,7 +2,7 @@
 
 This Android App is a currency converter.
 
-The purpose of the App is to experiment with Android MVVM with MVVM/ViewModel/LiveData/databinding.
+The purpose of the App is to experiment with Android MVVM/ViewModel/LiveData/databinding.
 
 ![screenshot.jpg](images/screenshot.jpg)
 
